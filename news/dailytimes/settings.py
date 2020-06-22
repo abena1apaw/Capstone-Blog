@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'users.apps.UsersConfig',
     'pages.apps.PagesConfig',
+    'articles.apps.ArticlesConfig',
 ]
 
 MIDDLEWARE = [
@@ -132,3 +133,6 @@ EMAIL_HOST_USER = 'apikey'
 EMAIL_HOST_PASSWORD = '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'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+TIME_ZONE = 'America/Chicago'
+
