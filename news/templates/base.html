@@ -13,6 +13,8 @@
   <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
       <a class="navbar-brand" href="{% url 'home' %}">News</a>
+      <a class="navbar-brand" href="{% url 'book_list' %}">Books</a>
+      <a class="navbar-brand" href="{% url 'about' %}">About</a>
       {% if user.is_authenticated %}
         <ul class="navbar-nav mr-auto">
           <li class="nav-item"><a href="{% url 'article_new' %}">Add New</a></li>
