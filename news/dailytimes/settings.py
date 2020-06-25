@@ -137,3 +137,5 @@ EMAIL_USE_TLS = True
 
 TIME_ZONE = 'America/Chicago'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

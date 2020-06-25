@@ -1,20 +1,13 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Home{% endblock title %}
 
 {% block content %}
-<div class="jumbotron">
-  <h1 class="display-4">News App</h1>
-  <p class="lead">Abena's news site built with Django</p>
-  <p class="lead">
-    <a class="btn btn-primary btn-lg" href="{% url 'article_list' %}" role="button">View All Articles</a></p>
-</div>
-<!--{% if user.is_authenticated %}
-  Hi {{ user.username }}!
-  <p><a href="{% url 'logout' %}">Log Out</a></p>
-{% else %}
-  <p>You are not logged in</p>
-  <a href="{% url 'login' %}">Log In</a> |
-  <a href="{% url 'signup' %}">Sign Up</a>
-{% endif %}-->
-{% endblock content %}
+<h1>Homepage</h1>
+<form class="form-inline mt-2 mt-md-0" action="{% url 'search_results' %}"
+method="get">
+  <input name="q" class="form-control mr-sm-2" type="text" placeholder="Search"
+  aria-label="Search">
+</form>
+{% endblock content %}s
