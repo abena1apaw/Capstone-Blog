@@ -4,10 +4,21 @@
 {% block title %}Home{% endblock title %}
 
 {% block content %}
-<h1>Homepage</h1>
+
+<div class="jumbotron">
+  <h1 class="display-4">News app</h1>
+  <h1>Homepage</h1>
+  <p class="lead">A News app built by Abena.</p>
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" href="{% url 'article_list' %}" role="button">View All Articles</a>
+  </p>
+</div>
+<div class="jumbotron">
+  <h2>Search for Books</h2>
 <form class="form-inline mt-2 mt-md-0" action="{% url 'search_results' %}"
 method="get">
   <input name="q" class="form-control mr-sm-2" type="text" placeholder="Search"
   aria-label="Search">
 </form>
+</div>
 {% endblock content %}s
