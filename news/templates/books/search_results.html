@@ -9,7 +9,6 @@
     <div>
       <h3><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></h3>
       <p>Author: {{ book.author }}</p>
-      <p>Price: $ {{ book.price }}</p>
     </div>
 {% endfor %}
 {% for article in object_list %}
@@ -22,4 +21,4 @@
 
             <br />
           {% endfor %}
-                {% endblock content %}
+          {% endblock content %}
