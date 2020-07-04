@@ -24,7 +24,7 @@ const flash = require("connect-flash");
 
 app.use(fileUpload());
 
-mongoose.connect("mongodb://localhost/my_database", { useNewUrlParser: true });
+mongoose.connect("mongodb+srv://dbuser:AItZ29azEXpRQvvm@cluster0.rlg9x.mongodb.net/my_database", { useNewUrlParser: true });
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
