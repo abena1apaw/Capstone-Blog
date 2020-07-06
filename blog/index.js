@@ -69,39 +69,17 @@ app.post(
   redirectIfAuthenticatedMiddleware,
   loginUserController
 );
+
+app.get("/about", (req, res) => {
+res.render("about");
+});
+ 
+app.get("/contact", (req, res) => {
+res.render("contact");
+});
+ 
+app.get("/post", (req, res) => {
+res.render("post");
+});
 app.get("/auth/logout", logoutController);
 app.use((req, res) => res.render("notfound"));
-
-const validateMiddleWare = (req, res, next) => {
-  if (req.files == null || req.body.title == null || req.body.title == null) {
-    return res.redirect("/posts/new");
-  }
-  next();
-};
-
-app.get("/post/:id", async (req, res) => {
-  const blogpost = await BlogPost.findById(req.params.id);
-  console.log(blogpost);
-  res.render("post", {
-    blogpost,
-  });
-});
-
-app.post("/posts/store", (req, res) => {
-  let image = req.files.image;
-  image.mv(path.resolve(__dirname, "public/img", image.name), async (error) => {
-    await BlogPost.create({
-      ...req.body,
-      image: "/img/" + image.name,
-    });
-    res.redirect("/");
-  });
-});
-
-app.get("/", async (req, res) => {
-  console.log("home starting...");
-  const blogposts = await BlogPost.find({});
-  res.render("index", {
-    blogposts,
-  });
-});
