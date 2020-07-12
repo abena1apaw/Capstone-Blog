@@ -1,5 +1,8 @@
-const BlogPost = require('../models/BlogPost.js')
 const path  = require('path');
+
+
+
+
 
 module.exports = async (req, res) => {
     try {
@@ -14,14 +17,15 @@ module.exports = async (req, res) => {
             }))
         }
         const newBlog = {
-            ...req.body,
-            userid: req.session.userId
-        }
+
+
+  }
         if (imageName) newBlog.image = '/img/' + imageName;
         await BlogPost.create(newBlog)
         res.redirect('/')
-    } catch (err) {
+
+
+ } catch (err) {
         console.log('err occuredd==>>', err)
         res.status(500).send(err);
     }
-}
