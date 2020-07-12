@@ -48,6 +48,7 @@ global.loggedIn = null;
 
 app.use("*", (req, res, next) => {
   loggedIn = req.session.userId;
+  username = req.session.username;
   next();
 });
 
@@ -55,8 +56,8 @@ app.use(flash());
 
 app.get("/posts/new", authMiddleware, newPostController);
 app.get("/", homeController);
-app.get("/post/:id", getPostController);
 app.post("/posts/store", authMiddleware, storePostController);
+app.get("/post/:id", getPostController);
 app.get("/auth/register", redirectIfAuthenticatedMiddleware, newUserController);
 app.post(
   "/users/register",
