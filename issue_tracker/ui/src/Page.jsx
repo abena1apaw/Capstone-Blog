@@ -34,6 +34,7 @@ function NavBar() {
       </Col>
       <Nav pullRight>
         <IssueAddNavItem />
+        <SignInNavItem />
         <NavDropdown
           id="user-dropdown"
           title={<Glyphicon glyph="option-vertical" />}
