@@ -12,7 +12,7 @@ import DateInput from './DateInput.jsx';
 import TextInput from './TextInput.jsx';
 import withToast from './withToast.jsx';
 import store from './store.js';
-import UserContext from './UserContext.js';
+import UserContext from './UserContext.jsx';
 
 class IssueEdit extends React.Component {
   static async fetchData(match, search, showError) {

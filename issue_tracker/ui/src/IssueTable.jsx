@@ -5,7 +5,7 @@ import {
   Button, Glyphicon, Tooltip, OverlayTrigger, Table,
 } from 'react-bootstrap';
 
-import UserContext from './UserContext.js';
+import UserContext from './UserContext.jsx';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class IssueRowPlain extends React.Component {

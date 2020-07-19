@@ -10,7 +10,7 @@ export default class Toast extends React.Component {
     }
   }
 
-  componentWillUnmount() {
+  componentDidUnmount() {
     clearTimeout(this.dismissTimer);
   }
 

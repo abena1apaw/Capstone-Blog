@@ -1,10 +1,12 @@
 # Capstone
-An application for blogging for any user. The blog is meant as a communication between multiple people. Blog can be about anything.
+An application for issue tracking for any user. The issue tracker is meant as resolved between multiple people. Blog can be about anything.
 
-This blog uses  html/css, bootstrap, jquery, javascript, node. js, and mongoDB.
+This issue tracker uses  html/css, bootstrap, jquery, javascript, node. js, React, and mongoDB.
 
-This project is still under contructions
+This project is still under contruction.
 
-Improvements: creating a separate folder for server and client sides
+Improvements: 
 need api communication to display in web
 would like to add comments
+would like to get app to run
+
