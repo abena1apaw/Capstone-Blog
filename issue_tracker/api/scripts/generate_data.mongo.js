@@ -1,7 +1,7 @@
 /* global db print */
 /* eslint no-restricted-globals: "off" */
 
-const owners = ['Ravan', 'Eddie', 'Pieta', 'Parvati', 'Victor'];
+const owners = ['Abena', 'Joyce', 'David', 'Joe', 'Aggie'];
 const statuses = ['New', 'Assigned', 'Fixed', 'Closed'];
 
 const initialCount = db.issues.count();
@@ -17,7 +17,7 @@ for (let i = 0; i < 100; i += 1) {
   const owner = owners[Math.floor(Math.random() * 5)];
   const status = statuses[Math.floor(Math.random() * 4)];
   const effort = Math.ceil(Math.random() * 20);
-  const title = `Lorem ipsum dolor sit amet, ${i}`;
+  const title = `Test, ${i}`;
   const id = initialCount + i + 1;
 
   const issue = {
