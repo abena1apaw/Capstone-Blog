@@ -1,117 +1,59 @@
-import React from 'react';
-import {
-  Navbar, Nav, NavItem, NavDropdown,
-  MenuItem, Glyphicon,
-  Grid, Col,
-} from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
+const fs = require('fs');
+require('dotenv').config();
+const { ApolloServer } = require('apollo-server-express');
 
-import Contents from './Contents.jsx';
-import IssueAddNavItem from './IssueAddNavItem.jsx';
-import SignInNavItem from './SignInNavItem.jsx';
-import Search from './Search.jsx';
-import UserContext from './UserContext.js';
-import graphQLFetch from './graphQLFetch.js';
-import store from './store.js';
+const GraphQLDate = require('./graphql_date.js');
+const about = require('./about.js');
+const issue = require('./issue.js');
+const auth = require('./auth.js');
 
-function NavBar({ user, onUserChange }) {
-  return (
-    <Navbar fluid>
-      <Navbar.Header>
-        <Navbar.Brand>Issue Tracker</Navbar.Brand>
-      </Navbar.Header>
-      <Nav>
-        <LinkContainer exact to="/">
-          <NavItem>Home</NavItem>
-        </LinkContainer>
-        <LinkContainer to="/issues">
-          <NavItem>Issue List</NavItem>
-        </LinkContainer>
-        <LinkContainer to="/report">
-          <NavItem>Report</NavItem>
-        </LinkContainer>
-      </Nav>
-      <Col sm={5}>
-        <Navbar.Form>
-          <Search />
-        </Navbar.Form>
-      </Col>
-      <Nav pullRight>
-        <IssueAddNavItem user={user} />
-        <SignInNavItem user={user} onUserChange={onUserChange} />
-        <NavDropdown
-          id="user-dropdown"
-          title={<Glyphicon glyph="option-vertical" />}
-          noCaret
-        >
-          <LinkContainer to="/about">
-            <MenuItem>About</MenuItem>
-          </LinkContainer>
-        </NavDropdown>
-      </Nav>
-    </Navbar>
-  );
+const resolvers = {
+  Query: {
+    about: about.getMessage,
+    user: auth.resolveUser,
+    issueList: issue.list,
+    issue: issue.get,
+    issueCounts: issue.counts,
+  },
+  Mutation: {
+    setAboutMessage: about.setMessage,
+    issueAdd: issue.add,
+    issueUpdate: issue.update,
+    issueDelete: issue.delete,
+    issueRestore: issue.restore,
+  },
+  GraphQLDate,
+};
+
+function getContext({ req }) {
+  const user = auth.getUser(req);
+  return { user };
 }
 
-function Footer() {
-  return (
-    <small>
-      <hr />
-      <p className="text-center">
-        Full source code available at this
-        {' '}
-        <a href="https://github.com/vasansr/pro-mern-stack-2">
-          GitHub repository
-        </a>
-      </p>
-    </small>
-  );
+const server = new ApolloServer({
+  typeDefs: fs.readFileSync('schema.graphql', 'utf-8'),
+  resolvers,
+  context: getContext,
+  formatError: (error) => {
+    console.log(error);
+    return error;
+  },
+  playground: true,
+  introspection: true,
+});
+
+function installHandler(app) {
+  const enableCors = (process.env.ENABLE_CORS || 'true') === 'true';
+  console.log('CORS setting:', enableCors);
+  let cors;
+  if (enableCors) {
+    const origin = process.env.UI_SERVER_ORIGIN || 'http://localhost:8000';
+    const methods = 'POST';
+    cors = { origin, methods, credentials: true };
+  } else {
+    cors = 'false';
+  }
+  server.applyMiddleware({ app, path: '/graphql', cors });
 }
 
-export default class Page extends React.Component {
-  static async fetchData(cookie) {
-    const query = `query { user {
-      signedIn givenName
-    }}`;
-    const data = await graphQLFetch(query, null, null, cookie);
-    return data;
-  }
-
-  constructor(props) {
-    super(props);
-    const user = store.userData ? store.userData.user : null;
-    delete store.userData;
-    this.state = { user };
-
-    this.onUserChange = this.onUserChange.bind(this);
-  }
-
-  async componentDidMount() {
-    const { user } = this.state;
-    if (user == null) {
-      const data = await Page.fetchData();
-      this.setState({ user: data.user });
-    }
-  }
-
-  onUserChange(user) {
-    this.setState({ user });
-  }
-
-  render() {
-    const { user } = this.state;
-    if (user == null) return null;
-
-    return (
-      <div>
-        <NavBar user={user} onUserChange={this.onUserChange} />
-        <Grid fluid>
-          <UserContext.Provider value={user}>
-            <Contents />
-          </UserContext.Provider>
-        </Grid>
-        <Footer />
-      </div>
-    );
-  }
-}
+module.exports = { installHandler };
