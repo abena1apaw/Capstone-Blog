@@ -35,7 +35,3 @@ return {
     isValid: isEmpty(errors)
   };
 };
-export default connect(
-  mapStateToProps,
-  { registerUser }
-)(withRouter(Register));
